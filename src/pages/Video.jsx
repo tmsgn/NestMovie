@@ -9,7 +9,7 @@ import {
   getEpsoides,
   getSeasons,
   getRecommendedTVShows,
-  topRatedTVShows as fetchTopRatedTVShows, // Import the correct function
+  topRatedTVShows as fetchTopRatedTVShows, 
 } from '../services/api';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
