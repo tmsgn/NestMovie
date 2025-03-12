@@ -9,7 +9,7 @@ import {
   getEpsoides,
   getSeasons,
   getRecommendedTVShows,
-  topRatedTVShows as fetchTopRatedTVShows, 
+  topRatedTVShows as fetchTopRatedTVShows,
 } from '../services/api';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -37,13 +37,17 @@ const Video = () => {
 
   useEffect(() => {
     if (media) {
-      setIframeUrl(`https://vidsrc.cc/v2/embed/movie/${media.id}?autoPlay=false`);
-      console.log(media.id);
-      setTvIframeUrl(`https://vidsrc.cc/v2/embed/tv/${media,id}/${currentSeason}/${currentEpisode}?autoPlay=false`);
+      setIframeUrl(`https://embed.su/embed/movie/${media.id}`);
+      setTvIframeUrl(`https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`);
     }
   }, [media]);
-  
 
+  useEffect(() => {
+    setTvIframeUrl(`https://embed.su/embed/tv/${media?.id}/${currentSeason}/${currentEpisode}`);
+  }, [currentSeason, currentEpisode, media]);
+
+
+  
   useEffect(() => {
     const fetchEpsoides = async () => {
       try {
@@ -154,7 +158,7 @@ const Video = () => {
   useEffect(() => {
     const fetchTopTVShows = async () => {
       try {
-        const data = await fetchTopRatedTVShows(); 
+        const data = await fetchTopRatedTVShows();
         setTopTVShows(data);
       } catch (error) {
         console.error('Error fetching top-rated TV shows:', error);
@@ -187,63 +191,62 @@ const Video = () => {
     return (
       <div className="flex flex-col">
         <NavBar />
-        <div className="flex mt-14 relative w-full">
-          <div className="w-full flex flex-wrap">
+        <div style={{ height: '85vh' }} className="relative mt-14 w-full">
+          <h1 className="text-white text-3xl font-bold mx-5">{media.title}</h1>
+          <div className="h-full flex">
             <iframe
-              className="w-full h-full rounded-xl mx-3"
+              className="w-3/4 h-full rounded-xl mx-3"
               src={iframeUrl}
               style={{ border: 'none' }}
               title="Movie Player"
-              referrerPolicy="no-referrer"
               allowFullScreen
             ></iframe>
-            <div className="flex justify-center gap-5 items-center w-full mt-5">
-              <span
-                onClick={() => setIframeUrl(`https://flicky.host/embed/movie/?id=${media.id}`)}
-                className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
-              >
-                Flicky
-              </span>
-              <span
-                onClick={() => setIframeUrl(`https://player.autoembed.cc/embed/movie/${media.id}`)}
-                className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
-              >
-                Vidsrc
-              </span>
+            <div className="rounded-lg w-1/4 bg-gray-400 p-3">
+              <h2 className="text-xl font-bold mb-1">You may also like</h2>
+              <div className="flex flex-col">
+                {relatedMovies.slice(0, 7).map((movie) => (
+                  <Link
+                    to={`/video/${movie.id}/${mediaType}/${movie.title || movie.name}`}
+                    key={movie.id}
+                    className="flex hover:bg-gray-600 rounded-lg cursor-pointer transform transition-all duration-150"
+                  >
+                    <img
+                      className="w-12 rounded-lg p-1"
+                      src={`http://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                      alt={movie.title}
+                    />
+                    <div>
+                      <h1 className="text-md font-semibold line-clamp-1">{movie.title}</h1>
+                      <h1 className="text-xs bg-white inline p-1 rounded-xl font-semibold">
+                        {getGenreName([movie.genre_ids[0]])}
+                      </h1>
+                      <h1 className="text-xs font-semibold mx-2">
+                        {movie.vote_average ? `${movie.vote_average.toFixed(1)} ⭐` : ''}
+                      </h1>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="rounded-lg w-1/3 bg-gray-400 p-3">
-            <h2 className="text-xl font-bold mb-1">You may also like</h2>
-            <div className="flex flex-col">
-              {relatedMovies.slice(0, 7).map((movie) => (
-                <Link
-                  to={`/video/${movie.id}/${mediaType}/${movie.title || movie.name}`}
-                  key={movie.id}
-                  className="flex hover:bg-gray-600 rounded-lg cursor-pointer transform transition-all duration-150"
-                >
-                  <img
-                    className="w-12 rounded-lg p-1"
-                    src={`http://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                  />
-                  <div>
-                    <h1 className="text-md font-semibold line-clamp-1">{movie.title}</h1>
-                    <h1 className="text-xs bg-white inline p-1 rounded-xl font-semibold">
-                      {getGenreName([movie.genre_ids[0]])}
-                    </h1>
-                    <h1 className="text-xs font-semibold mx-2">
-                      {movie.vote_average ? `${movie.vote_average.toFixed(1)} ⭐` : ''}
-                    </h1>
-                  </div>
-                </Link>
-              ))}
-            </div>
+          <div className="flex justify-center gap-5 items-center w-2/3 mt-1">
+            <span
+              onClick={() => setIframeUrl(`https://embed.su/embed/movie/${media.id}`)}
+              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+            >
+              Server 1
+            </span>
+            <span
+              onClick={() => setIframeUrl(`https://vidsrc.xyz/embed/movie/${media.id}`)}
+              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+            >
+              Server 2
+            </span>
           </div>
         </div>
-
-        <div className="text-white mt-20 flex w-full">
+        <div className="text-white mt-32 flex w-full">
           <img
-            className="w-56 rounded-xl m-2"
+            className="w-56 rounded-xl  m-2"
             src={`http://image.tmdb.org/t/p/w500${media.poster_path}`}
             alt={media.title}
           />
@@ -295,89 +298,92 @@ const Video = () => {
       </div>
     );
   }
+
   if (mediaType === 'tv') {
     return (
       <div className="flex flex-col">
         <NavBar />
-        <div className="flex mt-14 relative w-full">
-          <div className="w-full flex flex-wrap">
+        <div style={{ height: '85vh' }} className="relative mt-14 w-full">
+          <h1 className="text-white text-3xl font-bold mx-5">{`${media.name}: S${currentSeason} :E${currentEpisode}`}</h1>
+          <div className="h-full flex">
             <iframe
-              className="w-full h-full rounded-xl mx-3"
+              className="w-3/4 h-full rounded-xl mx-3"
               src={tvIframeUrl}
               style={{ border: 'none' }}
-              title="TV Show Player"
-              sandbox="allow-same-origin allow-scripts"
+              title="Movie Player"
               allowFullScreen
             ></iframe>
-            <div className="flex justify-center gap-5 items-center w-full mt-5">
-              <span
-                onClick={() => setTvIframeUrl(`https://flicky.host/embed/tv/?id=${media.id}&s=${currentSeason}&e=${currentEpisode}`)}
-                className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+            <div className="rounded-lg w-1/4 overflow-y-auto bg-gray-400 p-3">
+              <h2 className="text-xl font-bold mb-1">Seasons & Episodes</h2>
+              <select
+                className="bg-gray-600 text-white p-1 rounded-lg outline-none cursor-pointer mb-3"
+                name="season"
+                id="season"
+                value={selectedSeason}
+                onChange={(e) => {
+                  const seasonNumber = Number(e.target.value);
+                  setSelectedSeason(seasonNumber);
+                }}
               >
-                Flicky
-              </span>
-              <span
-                onClick={() => setTvIframeUrl(`https://player.autoembed.cc/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`)}
-                className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
-              >
-                Vidsrc
-              </span>
+                {seasons.map((season) => (
+                  <option
+                    className="bg-gray-600 thin-scrollbar text-white cursor-pointer hover:bg-gray-700"
+                    key={season.id}
+                    value={season.season_number}
+                  >
+                    Season {season.season_number}
+                  </option>
+                ))}
+              </select>
+              <div className="flex flex-col">
+                {episodes.map((episode, index) => (
+                  <Link
+                    to={`/video/${media.id}/tv/${media.name}`}
+                    key={index}
+                    className="flex hover:bg-gray-600 rounded-lg cursor-pointer transform transition-all duration-150"
+                    onClick={() => {
+                      setLoading(true);
+                      setCurrentEpisode(episode.episode_number);
+                      setCurrentSeason(selectedSeason);
+                      setTvIframeUrl(`https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`);
+                      setLoading(false);
+                    }}
+                  >
+                    {episode.still_path && (
+                      <img
+                        className="w-12 h-14 rounded-lg p-1 object-cover"
+                        src={`http://image.tmdb.org/t/p/w500${episode.still_path}`}
+                        alt={episode.name}
+                      />
+                    )}
+                    <div>
+                      <h1 className="text-md font-semibold line-clamp-1">Episode {index + 1}: {episode.name}</h1>
+                      <h1 className="text-xs font-semibold mx-2">
+                        {episode.vote_average ? `${episode.vote_average.toFixed(1)} ⭐` : ''}
+                      </h1>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-          <div style={{ height: '80vh' }} className="rounded-lg w-1/3 overflow-y-auto bg-gray-400 p-3">
-            <h2 className="text-xl font-bold mb-1">Seasons & Episodes</h2>
-            <select
-              className="bg-gray-600 text-white p-1 rounded-lg outline-none cursor-pointer mb-3"
-              name="season"
-              id="season"
-              value={selectedSeason}
-              onChange={(e) => {
-                const seasonNumber = Number(e.target.value);
-                setSelectedSeason(seasonNumber);
-              }}
+          <div className="flex justify-center gap-5 items-center w-2/3 mt-1">
+            <span
+              onClick={() => setTvIframeUrl(`https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`)}
+              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
             >
-              {seasons.map((season) => (
-                <option
-                  className="bg-gray-600 thin-scrollbar text-white cursor-pointer hover:bg-gray-700"
-                  key={season.id}
-                  value={season.season_number}
-                >
-                  Season {season.season_number}
-                </option>
-              ))}
-            </select>
-            <div className="flex flex-col">
-              {episodes.map((episode, index) => (
-                <Link
-                  to={`/video/${media.id}/tv/${media.name}`}
-                  key={index}
-                  className="flex hover:bg-gray-600 rounded-lg cursor-pointer transform transition-all duration-150"
-                  onClick={() => {
-                    setCurrentEpisode(episode.episode_number);
-                    setCurrentSeason(selectedSeason);
-                    setTvIframeUrl(`https://player.autoembed.cc/embed/tv/${media.id}/${selectedSeason}/${episode.episode_number}`);
-                  }}
-                >
-                  {episode.still_path && (
-                    <img
-                      className="w-12 h-14 rounded-lg p-1 object-cover"
-                      src={`http://image.tmdb.org/t/p/w500${episode.still_path}`}
-                      alt={episode.name}
-                    />
-                  )}
-                  <div>
-                    <h1 className="text-md font-semibold line-clamp-1">Episode {index + 1}: {episode.name}</h1>
-                    <h1 className="text-xs font-semibold mx-2">
-                      {episode.vote_average ? `${episode.vote_average.toFixed(1)} ⭐` : ''}
-                    </h1>
-                  </div>
-                </Link>
-              ))}
-            </div>
+              Server 1
+            </span>
+            <span
+              onClick={() => setTvIframeUrl(`https://player.autoembed.cc/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`)}
+              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+            >
+              Server 2
+            </span>
           </div>
         </div>
 
-        <div className="text-white mt-20 flex w-full">
+        <div className="text-white mt-32 flex w-full">
           <img
             className="w-56 rounded-xl m-2"
             src={`http://image.tmdb.org/t/p/w500${media.poster_path}`}
@@ -434,6 +440,7 @@ const Video = () => {
       </div>
     );
   }
+
   return null;
 };
 
