@@ -37,10 +37,12 @@ const Video = () => {
 
   useEffect(() => {
     if (media) {
-      setIframeUrl(`https://player.autoembed.cc/embed/movie/${media.id}`);
-      setTvIframeUrl(`https://player.autoembed.cc/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`);
+      setIframeUrl(`https://vidsrc.cc/v2/embed/movie/${media.id}?autoPlay=false`);
+      console.log(media.id);
+      setTvIframeUrl(`https://vidsrc.cc/v2/embed/tv/${media,id}/${currentSeason}/${currentEpisode}?autoPlay=false`);
     }
   }, [media]);
+  
 
   useEffect(() => {
     const fetchEpsoides = async () => {
@@ -193,6 +195,7 @@ const Video = () => {
               style={{ border: 'none' }}
               title="Movie Player"
               referrerPolicy="no-referrer"
+              allowFullScreen
             ></iframe>
             <div className="flex justify-center gap-5 items-center w-full mt-5">
               <span
@@ -304,6 +307,7 @@ const Video = () => {
               style={{ border: 'none' }}
               title="TV Show Player"
               sandbox="allow-same-origin allow-scripts"
+              allowFullScreen
             ></iframe>
             <div className="flex justify-center gap-5 items-center w-full mt-5">
               <span
