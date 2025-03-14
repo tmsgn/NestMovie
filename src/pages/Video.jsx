@@ -180,13 +180,13 @@ const Video = () => {
   if (loading) {
     return (
       <>
-        <NavBar />
-        <div class='flex space-x-2 justify-center items-center bg-[rgba(0, 0, 0, 0.897)] h-screen dark:invert'>
-    <span class='sr-only'>Loading...</span>
-     <div class='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.3s]'></div>
-   <div class='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]'></div>
-   <div class='h-8 w-8 bg-white rounded-full animate-bounce'></div>
- </div>
+      <NavBar />
+      <div className='flex space-x-2 justify-center items-center bg-[rgba(0, 0, 0, 0.897)] h-screen dark:invert'>
+        <span className='sr-only'>Loading...</span>
+        <div className='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+        <div className='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+        <div className='h-8 w-8 bg-white rounded-full animate-bounce'></div>
+      </div>
       </>
     );
   }
@@ -198,25 +198,25 @@ const Video = () => {
   if (mediaType === 'movie') {
     return (
       <div className="flex flex-col">
-        <NavBar />
-        <div style={{ height: '85vh' }} className="relative mt-14 w-full">
-          <h1 className="text-white text-3xl font-bold mx-5">{media.title}</h1>
-          <div className="h-full flex">
-            <iframe
-              className="w-3/4 h-full rounded-xl mx-3"
-              src={iframeUrl}
-              style={{ border: 'none' }}
-              title="Movie Player"
-              allowFullScreen
-            ></iframe>
-            <div className="rounded-lg w-1/4 bg-gray-400 p-3">
-              <h2 className="text-xl font-bold mb-1">You may also like</h2>
-              <div className="flex flex-col">
+      <NavBar />
+      <div style={{ height: '85vh' }} className="relative mt-14 w-full">
+        <h1 className="text-white text-3xl font-bold mx-5">{media.title}</h1>
+        <div className="h-full flex">
+        <iframe
+          className="w-3/4 h-full rounded-xl mx-3"
+          src={iframeUrl}
+          style={{ border: 'none' }}
+          title="Movie Player"
+          allowFullScreen
+        ></iframe>
+        <div className="rounded-lg w-1/4 bg-gray-400 p-3">
+          <h2 className="text-xl font-bold mb-1">You may also like</h2>
+          <div className="flex flex-col">
                 {relatedMovies.slice(0, 7).map((movie) => (
                   <Link
                     to={`/video/${movie.id}/${mediaType}/${movie.title || movie.name}`}
                     key={movie.id}
-                    className="flex hover:bg-gray-600 rounded-lg cursor-pointer transform transition-all duration-150"
+                    className="flex hover:bg-gray-500 rounded-lg cursor-pointer transform transition-all duration-150"
                   >
                     <img
                       className="w-12 rounded-lg p-1"
@@ -225,7 +225,7 @@ const Video = () => {
                     />
                     <div>
                       <h1 className="text-md font-semibold line-clamp-1">{movie.title}</h1>
-                      <h1 className="text-xs bg-white inline p-1 rounded-xl font-semibold">
+                      <h1 className="md:text-sm text-xs text-gray-800 inline ">
                         {getGenreName([movie.genre_ids[0]])}
                       </h1>
                       <h1 className="text-xs font-semibold mx-2">
