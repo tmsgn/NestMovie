@@ -8,13 +8,16 @@ const Home = () => {
   const { movies, tvShows, loading, error } = useContext(Context);  
 
   if (loading) {  
-    return  <div className="flex justify-center items-center h-screen">
-    <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-  </div>  
+    return  <div class='flex space-x-2 justify-center items-center bg-[rgba(0, 0, 0, 0.897)] h-screen dark:invert'>
+    <span class='sr-only'>Loading...</span>
+     <div class='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+   <div class='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+   <div class='h-8 w-8 bg-white rounded-full animate-bounce'></div>
+ </div>
   }  
 
   if (error) {  
-    return <div>Error: {error.message}</div>; 
+    return <div className='text-white text-xl'>Error: {error.message}</div>; 
   }  
 
   return (  

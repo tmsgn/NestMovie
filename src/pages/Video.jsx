@@ -131,6 +131,8 @@ const Video = () => {
     fetchGenres();
   }, []);
 
+  
+
   useEffect(() => {
     const fetchCasts = async () => {
       try {
@@ -167,6 +169,9 @@ const Video = () => {
     fetchTopTVShows();
   }, []);
 
+
+ 
+
   const getGenreName = (genreIds) => {
     if (!genreIds || genreIds.length === 0) return '';
     return genreIds.map((id) => genres.find((genre) => genre.id === id)?.name || '').join(', ');
@@ -176,9 +181,12 @@ const Video = () => {
     return (
       <>
         <NavBar />
-        <div className="flex justify-center items-center h-screen">
-          <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-        </div>
+        <div class='flex space-x-2 justify-center items-center bg-[rgba(0, 0, 0, 0.897)] h-screen dark:invert'>
+    <span class='sr-only'>Loading...</span>
+     <div class='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+   <div class='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+   <div class='h-8 w-8 bg-white rounded-full animate-bounce'></div>
+ </div>
       </>
     );
   }
@@ -229,8 +237,10 @@ const Video = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center gap-5 items-center w-2/3 mt-1">
-            <span
+          <div className="flex justify-center flex-col gap-5 items-center w-2/3 mt-1">
+          <h1 className='text-red-500'>change the server if the current server is not working</h1>
+           <div className='flex gap-3'>
+           <span
               onClick={() => setIframeUrl(`https://embed.su/embed/movie/${media.id}`)}
               className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
             >
@@ -242,6 +252,7 @@ const Video = () => {
             >
               Server 2
             </span>
+           </div>
           </div>
         </div>
         <div className="text-white mt-32 flex w-full">
