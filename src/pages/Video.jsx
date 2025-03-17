@@ -203,13 +203,13 @@ const Video = () => {
         <h1 className="text-white text-3xl font-bold mx-5">{media.title}</h1>
         <div className="h-full flex">
         <iframe
-          className="w-3/4 h-full rounded-xl mx-3"
+          className="lg:w-3/4 w-full h-full rounded-xl mx-3"
           src={iframeUrl}
           style={{ border: 'none' }}
           title="Movie Player"
           allowFullScreen
         ></iframe>
-        <div className="rounded-lg w-1/4 bg-gray-400 p-3">
+        <div className="rounded-lg  w-1/4  hidden lg:block bg-gray-400 p-3">
           <h2 className="text-xl font-bold mb-1">You may also like</h2>
           <div className="flex flex-col">
                 {relatedMovies.slice(0, 7).map((movie) => (
@@ -237,24 +237,24 @@ const Video = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center flex-col gap-5 items-center w-2/3 mt-1">
-          <h1 className='text-red-500'>change the server if the current server is not working</h1>
+          <div className="flex justify-center flex-col gap-5 items-center md:w-2/3 mt-1">
+          <h1 className='text-red-500 text-xs md:text-md lg:text-md '>change the server if the current server is not working</h1>
            <div className='flex gap-3'>
            <span
               onClick={() => setIframeUrl(`https://embed.su/embed/movie/${media.id}`)}
-              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+              className="lg:text-lg p-1 rounded-xl text-sm  bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
             >
               Server 1
             </span>
             <span
               onClick={() => setIframeUrl(`https://vidsrc.xyz/embed/movie/${media.id}`)}
-              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+              className="lg:text-lg p-1 rounded-xl  text-sm  bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
             >
               Server 2
             </span>
             <span
               onClick={() => setIframeUrl(`https://vidsrc.cc/v2/embed/movie/${media.id}`)}
-              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+               className="lg:text-lg p-1 rounded-xl  text-sm  bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
             >
               Server 3
             </span>
