@@ -362,7 +362,7 @@ const Video = () => {
                       setLoading(true);
                       setCurrentEpisode(episode.episode_number);
                       setCurrentSeason(selectedSeason);
-                      setTvIframeUrl(`https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`);
+                      setTvIframeUrl(`https://embed.su/embed/tv/${media.id}/${selectedSeason}/${episode.episode_number}`);
                       setLoading(false);
                     }}
                   >
