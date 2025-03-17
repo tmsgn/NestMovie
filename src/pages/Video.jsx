@@ -197,121 +197,121 @@ const Video = () => {
 
   if (mediaType === 'movie') {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col w-screen overflow-x-hidden">
       <NavBar />
-      <div style={{ height: '85vh' }} className="relative mt-14 w-full">
-        <h1 className="text-white text-3xl font-bold mx-5">{media.title}</h1>
-        <div className="h-full flex">
-        <iframe
-          className="lg:w-3/4 w-full h-full rounded-xl mx-3"
-          src={iframeUrl}
-          style={{ border: 'none' }}
-          title="Movie Player"
-          allowFullScreen
-        ></iframe>
-        <div className="rounded-lg  w-1/4  hidden lg:block bg-gray-400 p-3">
-          <h2 className="text-xl font-bold mb-1">You may also like</h2>
-          <div className="flex flex-col">
-                {relatedMovies.slice(0, 7).map((movie) => (
-                  <Link
-                    to={`/video/${movie.id}/${mediaType}/${movie.title || movie.name}`}
-                    key={movie.id}
-                    className="flex hover:bg-gray-500 rounded-lg cursor-pointer transform transition-all duration-150"
-                  >
-                    <img
-                      className="w-12 rounded-lg p-1"
-                      src={`http://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={movie.title}
-                    />
-                    <div>
-                      <h1 className="text-md font-semibold line-clamp-1">{movie.title}</h1>
-                      <h1 className="md:text-sm text-xs text-gray-800 inline ">
-                        {getGenreName([movie.genre_ids[0]])}
-                      </h1>
-                      <h1 className="text-xs font-semibold mx-2">
-                        {movie.vote_average ? `${movie.vote_average.toFixed(1)} ⭐` : ''}
-                      </h1>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center flex-col gap-5 items-center md:w-2/3 mt-1">
-          <h1 className='text-red-500 text-xs md:text-md lg:text-md '>change the server if the current server is not working</h1>
-           <div className='flex gap-3'>
-           <span
-              onClick={() => setIframeUrl(`https://embed.su/embed/movie/${media.id}`)}
-              className="lg:text-lg p-1 rounded-xl text-sm  bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
-            >
-              Server 1
-            </span>
-            <span
-              onClick={() => setIframeUrl(`https://vidsrc.xyz/embed/movie/${media.id}`)}
-              className="lg:text-lg p-1 rounded-xl  text-sm  bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
-            >
-              Server 2
-            </span>
-            <span
-              onClick={() => setIframeUrl(`https://vidsrc.cc/v2/embed/movie/${media.id}`)}
-               className="lg:text-lg p-1 rounded-xl  text-sm  bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
-            >
-              Server 3
-            </span>
-           </div>
+      <div className="relative flex flex-col mt-14 w-full h-fit">
+      <h1 className="text-white text-3xl font-bold mx-5">{media.title}</h1>
+      <div className="flex h-full">
+      <iframe
+        className="lg:w-3/4 w-full md:h-auto h-64  rounded-xl mx-3"
+        src={iframeUrl}
+        style={{ border: 'none' }}
+        title="Movie Player"
+        allowFullScreen
+      ></iframe>
+      <div className="rounded-lg w-1/4 hidden lg:block bg-gray-400 p-3">
+        <h2 className="text-xl font-bold mb-1">You may also like</h2>
+        <div className="flex flex-col">
+        {relatedMovies.slice(0, 7).map((movie) => (
+        <Link
+        to={`/video/${movie.id}/${mediaType}/${movie.title || movie.name}`}
+        key={movie.id}
+        className="flex hover:bg-gray-500 rounded-lg cursor-pointer transform transition-all duration-150"
+        >
+        <img
+          className="w-12 rounded-lg p-1"
+          src={`http://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+        />
+        <div>
+          <h1 className="text-md font-semibold line-clamp-1">{movie.title}</h1>
+          <h1 className="md:text-sm text-xs text-gray-800 inline">
+          {getGenreName([movie.genre_ids[0]])}
+          </h1>
+          <h1 className="text-xs font-semibold mx-2">
+          {movie.vote_average ? `${movie.vote_average.toFixed(1)} ⭐` : ''}
+          </h1>
+        </div>
+        </Link>
+        ))}
+        </div>
+      </div>
+      </div>
+      <div className="flex justify-center flex-col gap-5 items-center md:w-2/3 mt-1">
+      <h1 className="text-red-500 text-xs md:text-md lg:text-md">change the server if the current server is not working</h1>
+      <div className="flex gap-3">
+        <span
+        onClick={() => setIframeUrl(`https://embed.su/embed/movie/${media.id}`)}
+        className="lg:text-lg p-1 rounded-xl text-sm bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
+        >
+        Server 1
+        </span>
+        <span
+        onClick={() => setIframeUrl(`https://vidsrc.xyz/embed/movie/${media.id}`)}
+        className="lg:text-lg p-1 rounded-xl text-sm bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
+        >
+        Server 2
+        </span>
+        <span
+        onClick={() => setIframeUrl(`https://vidsrc.cc/v2/embed/movie/${media.id}`)}
+          className="lg:text-lg p-1 rounded-xl text-sm bg-red-300 lg:p-2 lg:px-3 lg:rounded-3xl cursor-pointer hover:bg-red-400"
+          >
+          Server 3
+          </span>
+        </div>
+        </div>
+      </div>
+      <div className="text-white md:mt-10 flex w-full">
+        <img
+        className="md:w-56 h-56 md:h-auto rounded-xl m-2"
+        src={`http://image.tmdb.org/t/p/w500${media.poster_path}`}
+        alt={media.title}
+        />
+        <div className="flex m-3 flex-col md:gap-4 gap-1">
+        <div className="flex md:gap-5">
+          <div className="flex md:gap-5 gap-2">
+          <h1 className="text-black text-sm md:text-base h-7 md:h-base bg-white p-1 md:rounded-xl rounded-lg font-semibold">{mediaType}</h1>
+          <h1 className="md:text-2xl font-semibold">{media.title}</h1>
           </div>
         </div>
-        <div className="text-white mt-32 flex w-full">
-          <img
-            className="w-56 rounded-xl  m-2"
-            src={`http://image.tmdb.org/t/p/w500${media.poster_path}`}
-            alt={media.title}
-          />
-          <div className="flex m-3 flex-col gap-4">
-            <div className="flex gap-5">
-              <div className="flex gap-5">
-                <h1 className="text-black bg-white p-1 rounded-xl font-semibold">{mediaType}</h1>
-                <h1 className="text-2xl font-semibold">{media.title}</h1>
-              </div>
-            </div>
-            <h1>{media.vote_average} ⭐</h1>
-            <h1>{media.overview}</h1>
-            <span className="flex gap-3 text-gray-500">
-              Country: <h1 className="text-white">{media.production_countries?.[0]?.name}</h1>
-            </span>
-            <span className="flex gap-3 text-gray-500">
-              Genre: <h1 className="text-white">{media.genres?.[0]?.name}</h1>
-            </span>
-            <span className="flex gap-3 text-gray-500">
-              Cast: <h1 className="text-white">{casts.map((cast) => cast.name).join(', ')}</h1>
-            </span>
-          </div>
+        <h1 className='text-sm md:text-base'>{media.vote_average} ⭐</h1>
+        <h1 className='line-clamp-3 text-sm md:text-base'>{media.overview}</h1>
+        <span className="flex gap-3 text-gray-500">
+          Country: <h1 className="text-white text-sm md:text-base">{media.production_countries?.[0]?.name}</h1>
+        </span>
+        <span className="flex gap-3 text-sm md:text-base text-gray-500">
+          Genre: <h1 className="text-white">{media.genres?.[0]?.name}</h1>
+        </span>
+        <span className="flex gap-3 text-sm md:text-base text-gray-500">
+          Cast: <h1 className="text-white line-clamp-1">{casts.map((cast) => cast.name).join(', ')}</h1>
+        </span>
         </div>
+      </div>
 
-        <div className="text-white p-5">
-          <h1 className="text-3xl font-bold mb-4">Recommended Movies</h1>
-          {relatedMovies.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              {relatedMovies.slice(7, 100).map(
-                (movie) => movie.poster_path && <MovieCard key={movie.id} movies={[movie]} mediaType="movie" />
-              )}
-            </div>
-          ) : (
-            <p>No recommended movies available.</p>
-          )}
-
-          <h1 className="text-3xl font-bold mt-8 mb-4">Top Rated Movies</h1>
-          {topMovies.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              {topMovies.map(
-                (movie) => movie.poster_path && <MovieCard key={movie.id} movies={[movie]} mediaType="movie" />
-              )}
-            </div>
-          ) : (
-            <p>No top-rated movies available.</p>
+      <div className="text-white p-5">
+        <h1 className="md:text-3xl text-xl font-bold mb-4 ">Recommended Movies</h1>
+        {relatedMovies.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          {relatedMovies.slice(7, 100).map(
+          (movie) => movie.poster_path && <MovieCard key={movie.id} movies={[movie]} mediaType="movie" />
           )}
         </div>
-        <Footer />
+        ) : (
+        <p>No recommended movies available.</p>
+        )}
+
+        <h1 className="text-3xl font-bold mt-8 mb-4">Top Rated Movies</h1>
+        {topMovies.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          {topMovies.map(
+          (movie) => movie.poster_path && <MovieCard key={movie.id} movies={[movie]} mediaType="movie" />
+          )}
+        </div>
+        ) : (
+        <p>No top-rated movies available.</p>
+        )}
+      </div>
+      <Footer />
       </div>
     );
   }

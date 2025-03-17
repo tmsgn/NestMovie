@@ -30,11 +30,11 @@ const Home = () => {
         <ImgSlider />  
         <div className='text-white p-5'>  
           <h1 className='text-3xl font-bold mb-4'>Trending Movies</h1>  
-          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3'>  
+          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 md:gap-3 '>  
             <MovieCard movies={movies} mediaType="movie"/>  
           </div>  
           <h1 className='text-3xl font-bold mb-4 mt-10 '>Trending TV Shows</h1>  
-          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 md:gap-3 gap-1'>  
+          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 md:gap-3'>  
             <MovieCard movies={tvShows} mediaType="tv"/>  
           </div>   
         </div>  
