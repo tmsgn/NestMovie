@@ -9,7 +9,7 @@ import Video from './pages/Video';
 function App() {
   return (
     <ContextProvider>
-      <Router basename="/">
+      <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/video/:id/:mediaType/:title" element={<Video />} />
