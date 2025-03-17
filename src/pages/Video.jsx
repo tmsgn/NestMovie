@@ -252,6 +252,12 @@ const Video = () => {
             >
               Server 2
             </span>
+            <span
+              onClick={() => setIframeUrl(`https://vidsrc.cc/v2/embed/movie/${media.id}`)}
+              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+            >
+              Server 3
+            </span>
            </div>
           </div>
         </div>
@@ -390,6 +396,12 @@ const Video = () => {
               className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
             >
               Server 2
+            </span>
+            <span
+              onClick={() => setTvIframeUrl(`https://vidsrc.cc/v2/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`)}
+              className="text-lg bg-red-300 p-2 px-3 rounded-3xl cursor-pointer hover:bg-red-400"
+            >
+              Server 3
             </span>
           </div>
         </div>

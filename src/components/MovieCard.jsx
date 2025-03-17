@@ -35,14 +35,18 @@ const MovieCard = ({ movies, mediaType }) => {
           key={movie.id} 
           className='w-auto rounded-lg cursor-pointer'
         >
-          <div className='hover:bg-gray-400  box group hover:text-black p-1 rounded-xl transform transition-all duration-300 hover:scale-105'>  
-            <img className='rounded-lg  w-full' src={`http://image.tmdb.org/t/p/w780${movie.poster_path}`} alt={movie.title || movie.name} />  
-            <div className='py-1'>  
+          <div className='hover:bg-gray-400   box group hover:text-black p-1 rounded-xl transform transition-all duration-300 hover:scale-105'>  
+            <img className='rounded-lg   w-full' src={`http://image.tmdb.org/t/p/w780${movie.poster_path}`} alt={movie.title || movie.name} />  
+            <div className='py-1 inline'>  
               <h1 className='truncate font-semibold text-xs sm:text-base group-hover:text-black'>{movie.title || movie.name}</h1>  
               <h1 className='text-gray-300 text-xs lg:text-base group-hover:text-black '>{new Date(movie.release_date || movie.first_air_date).getFullYear()}</h1>  
-              <span className='flex items-center'>
-              <h1 className=' inline  text-gray-400  group-hover:text-black text-xs md:text-sm'>{getGenreName(movie.genre_ids)}</h1>
-              <h1 className='text-xs lg:text-sm font-semibold mx-2'>{typeof movie.vote_average === 'number' ? `${movie.vote_average.toFixed(1)} ⭐` : ''}</h1></span>
+              <div className='flex flex-row flex-wrap relative'>
+                <div className='flex flex-row flex-wrap gap-x-3'>
+                  <h1 className=' inline  text-gray-400  group-hover:text-black text-xs md:text-sm'>{getGenreName(movie.genre_ids)}</h1>
+                  <h1 className='text-xs lg:text-sm font-semibold '>{typeof movie.vote_average === 'number' ? `${movie.vote_average.toFixed(1)} ⭐` : ''}</h1>
+                </div>
+              <h1 className='absolute right-1 text-xs lg:text-sm group-hover:text-black text-gray-300 border group-hover:border-black px-1 text-center rounded-lg '>{mediaType}</h1>
+              </div>
             </div>  
           </div>  
         </Link>

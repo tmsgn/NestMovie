@@ -20,7 +20,7 @@ const ImgSlider = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="relative w-full  overflow-x-hidden" style={{ height: '90vh'}}>
+        <div className="relative rounded-b-3xl w-full  overflow-x-hidden" style={{ height: '90vh'}}>
             <div className="absolute inset-0 z-0">
                 {movies.length > 0 && (
                     <img
@@ -56,7 +56,7 @@ const ImgSlider = () => {
                         pathname: `/video/${movies[currentImg].id}/${movies[currentImg].media_type}/${movies[currentImg].title || movies[currentImg].name}`, 
                       }}  
                         key={movies[currentImg].id}
-                        className="bg-white p-1 cursor-pointer md:px-2 text-center rounded-xl transition duration-300 ease-in-out hover:bg-red-500"
+                        className="bg-white p-1 cursor-pointer md:px-1 text-center rounded-xl transition duration-300 ease-in-out hover:bg-red-500"
                     >
                         ▶️watch
                     </Link>
