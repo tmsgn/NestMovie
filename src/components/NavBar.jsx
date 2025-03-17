@@ -48,7 +48,7 @@ const NavBar = () => {
           <li
             className={`${!menu ? 'hidden' : 'flex'} text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}
           >
-            <Link to="//">
+            <Link to="/">
               <span className="text-2xl text-blue-400 hover:text-blue-900  p-1 font-extrabold text-gradient bg-clip-text text-transparent">
               MovieNest🎬
               </span>
