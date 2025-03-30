@@ -3,14 +3,29 @@
   <head>
     <meta charset="utf-8">
     <title>Redirecting...</title>
-    <script type="text/javascript">
-      (function () {
-        var pathSegments = window.location.pathname.split('/').slice(1).join('/');
-        var queryParams = window.location.search;
-        var hash = window.location.hash;
-        window.location.replace('/?' + pathSegments + queryParams + hash);
-      })();
-    </script>
   </head>
-  <body></body>
+  <body>
+    <script>
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      var pathSegmentsToKeep = 0;
+      var l = window.location;
+      var r = l.pathname.split('/').slice(1);
+      var deploy = r.slice(0, pathSegmentsToKeep);
+      var rest = r.slice(pathSegmentsToKeep);
+      var base = l.origin + '/' + deploy.join('/');
+      var restPath = rest.join('/');
+      var f = restPath
+        .split('/')
+        .pop()
+        .split('.')
+        .slice(0, -1)
+        .join('.');
+      var o = f ? restPath.slice(0, -(f.length + 5)) : restPath;
+      var m = (l.search || '').replace(/^\?/, '');
+      var g = '//' + l.host + (l.port ? ':' + l.port : '') + base + o + (f ? '#' + f : '') + (m ? '?' + m : '');
+      window.location.replace(g);
+    </script>
+  </body>
 </html>
