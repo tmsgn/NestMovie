@@ -79,3 +79,18 @@ export const getSeasons = async (id) => {
     const data = await response.json();
     return data.seasons;
 }
+
+export const getLatestMovies = async () => {
+    const response = await fetch(`${BaseURl}/movie/now_playing?api_key=${APIKey}`);
+    const data = await response.json();
+    return data.results; 
+};
+
+
+export const getLatestTVShows = async () => {
+    const response = await fetch(`${BaseURl}/tv/latest?api_key=${APIKey}`);
+    const data = await response.json();
+    return data.results;
+}
+
+

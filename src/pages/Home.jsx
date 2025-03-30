@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';  
 import ImgSlider from '../components/ImgSlider';  
-import NavBar from '../components/NavBar';  
+import Navbar from '../components/Navbar';  
 import { Context } from '../context/Context';  
 import MovieCard from '../components/MovieCard';  
 import Footer from '../components/Footer';
@@ -25,7 +25,7 @@ const Home = () => {
 
   return (  
     <div className='w-full overflow-x-hidden'>  
-      <NavBar />  
+      <Navbar />  
       <div className=''>
         <ImgSlider />  
         <div className='text-white p-5'>  
