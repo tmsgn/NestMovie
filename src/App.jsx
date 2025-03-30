@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './pages/Home';
 import ContextProvider from './context/Context';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Movies from './pages/Movies';
 import Tvshows from './pages/Tvshows';
 import Video from './pages/Video';

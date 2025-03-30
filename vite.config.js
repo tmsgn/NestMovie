@@ -5,7 +5,7 @@ import { resolve } from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? 'https://nestmovie.live/' : '/',
+  base: '/',
   server: {
     host: '0.0.0.0', 
     port: 3000,
