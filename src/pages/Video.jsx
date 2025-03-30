@@ -11,7 +11,7 @@ import {
   getRecommendedTVShows,
   topRatedTVShows as fetchTopRatedTVShows,
 } from '../services/api';
-import Navbar from '../components/Navbar';
+import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import MovieCard from '../components/MovieCard';
 
