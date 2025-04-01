@@ -3,12 +3,12 @@ import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaTelegram } from "react
 
 const Footer = () => {
     return (
-        <footer className="text-white py-6 mt-10">
-            <div className="container mx-auto text-center">
+        <footer className="text-white  text-xs md:text-base py-6 mt-1 md:mt-5">
+            <div className="mx-auto text-center">
                 <p className="text-center m-3">
                     &copy; {new Date().getFullYear()} MovieNest. All rights reserved.
                 </p>
-                <p className="w-2/3 m-3 mx-auto text-center">
+                <p className="w-full md:w-4/5 m-3 mx-auto text-center">
                     Looking for the best place to stream movies? MovieNest is your go-to destination! Watch the latest blockbusters, timeless classics, and trending TV shows in stunning HD quality, all for free. With an easy-to-use interface and an extensive library, MovieNest brings you endless entertainment. Visit MovieNest today and dive into a world of free movies and series!
                 </p>
                 <div>

@@ -33,7 +33,7 @@ const NavBar = () => {
 
   return (
     <nav className="fixed w-full md:rounded-b-full rounded-b-3xl glass2 text-white z-20">
-      <ul className={`${!menu ? 'flex ' : ''} justify-between md:mx-10   border-none p-1`}>
+      <ul className={`${!menu ? 'flex ' : ''} justify-between md:mx-10 border-none p-1`}>
         <div className={`${menu ? 'glass' : 'flex justify-between w-full mr-10'} gap-5 p-1 rounded-xl`}>
           <li
             onClick={toogleMenu}
@@ -49,8 +49,8 @@ const NavBar = () => {
             className={`${!menu ? 'hidden' : 'flex'} text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}
           >
             <Link to="/">
-              <span className="text-2xl text-blue-400 hover:text-blue-900  p-1 font-extrabold text-gradient bg-clip-text text-transparent">
-              MovieNest🎬
+              <span className="text-2xl text-blue-400 hover:text-blue-900 p-1 font-extrabold text-gradient bg-clip-text text-transparent">
+                MovieNest🎬
               </span>
             </Link>
           </li>
@@ -74,7 +74,6 @@ const NavBar = () => {
             <div className="absolute z-10 w-full rounded-lg">
               {searchResults.length > 0 ? (
                 <ul className="max-h-80 p-2 w-64 overflow-y-auto no-scrollbar bg-gray-500 z-40 rounded-xl mt-2">
-                  {window.addEventListener('click', () => setSearch(''))}
                   {searchResults.map(
                     (item) =>
                       item.poster_path && (

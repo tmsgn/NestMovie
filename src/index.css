@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes bounce-custom {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(23px);
+  }
+  60% {
+    transform: translateY(-25px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+}
+
+.animate-bounce-custom {
+  animation: bounce-custom 1.2s infinite;
+}
+
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -22,24 +41,30 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
 
-.no-scrollbar {  
-  -ms-overflow-style: none;  
-  overflow: auto;  
-  scrollbar-width: none;  
-}  
+.no-scrollbar {
+  -ms-overflow-style: none;
+  overflow: auto;
+  scrollbar-width: none;
+}
 
-.no-scrollbar::-webkit-scrollbar {  
-  display: none;  
-}  
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
-.no-scrollbar-content {  
-  padding: 10px;  
-}  
+.no-scrollbar-content {
+  padding: 10px;
+}
 
 .glass2 {
-  background-color: transparent; 
-  backdrop-filter: blur(5px); 
+  background-color: transparent;
+  backdrop-filter: blur(5px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 

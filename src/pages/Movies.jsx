@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+import NavBar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { topRatedMovies as fetchTopRatedMovies,
   getLatestMovies as fetchLatestMovies
@@ -9,15 +9,17 @@ import MovieCard from '../components/MovieCard'
 import { Context } from '../context/Context'
 
 const Movies = () => {
-  const { movies, loading} = useContext(Context);  
+  const { movies} = useContext(Context);  
   const [topMovies, setTopMovies] = useState([])
   const [latestMovies, setLatestMovies] = useState([])
-
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const getLatest = async () => {
       try {
+        setLoading(true)
         const data = await fetchLatestMovies();
         setLatestMovies(data);
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching latest movies:', error);
       }
@@ -28,8 +30,10 @@ const Movies = () => {
   useEffect(() => {
     const fetchTopMovies = async () => {
       try {
+        setLoading(true)
         const data = await fetchTopRatedMovies();
         setTopMovies(data);
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
@@ -39,20 +43,20 @@ const Movies = () => {
 
   if (loading) {
     return (
-      <div className='flex flex-col h-screen'>
-        <div className='flex space-x-2 justify-center items-center bg-[rgba(0, 0, 0, 0.897)] h-screen dark:invert'>
-          <span className='sr-only'>Loading...</span>
-          <div className='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.3s]'></div>
-          <div className='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]'></div>
-          <div className='h-8 w-8 bg-white rounded-full animate-bounce'></div>
-        </div>
+      <div>
+      <NavBar/>
+       <div className='flex space-x-2 justify-center items-center bg-[rgba(0, 0, 0, 0.897)] h-screen dark:invert'>
+        <div className='h-8 w-8 bg-white rounded-full animate-bounce' style={{ animationDelay: '0s' }}></div>
+        <div className='h-8 w-8 bg-white rounded-full animate-bounce' style={{ animationDelay: '0.2s' }}></div>
+        <div className='h-8 w-8 bg-white rounded-full animate-bounce' style={{ animationDelay: '0.4s' }}></div>
       </div>
+    </div>
     )
   }
 
   return (
     <div className='flex flex-col min-h-screen'>
-      <Navbar />
+      <NavBar />
       <div className='text-white mt-16 flex-grow'>
         <div>
           <h1 className="text-3xl font-bold mt-8 mb-4">Top Rated Movies</h1>

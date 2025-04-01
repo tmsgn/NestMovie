@@ -17,6 +17,7 @@
         }
       }(window.location))
     </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_drop_down" />
     <meta name="google-adsense-account" content="ca-pub-9825571836849517">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -25,10 +26,29 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: rgba(0, 0, 0, 0.897);
-      overflow-x: hidden;
+      background-color: rgba(0, 0, 0, 0.85);
+    }
+  
+    /* Custom scrollbar styling */
+    body::-webkit-scrollbar {
+      width: 12px;
+    }
+  
+    body::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 10px;
+    }
+  
+    body::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 10px;
+    }
+  
+    body::-webkit-scrollbar-thumb:hover {
+      background: #888;
     }
   </style>
+  
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
