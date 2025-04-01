@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { searchMedia } from '../services/api';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from "react";
+import { searchMedia } from "../services/api";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [menu, setMenu] = useState(false);
+  const searchRef = useRef(null);
 
   const toogleMenu = () => {
     setMenu(!menu);
@@ -15,15 +16,15 @@ const NavBar = () => {
     const fetchData = async () => {
       if (search.length === 0) return;
       const data = await searchMedia(search);
-
+  
       const mergedResults = [
-        ...data.movies.map((movie) => ({ ...movie, type: 'movie' })),
-        ...data.tvShows.map((show) => ({ ...show, type: 'tv' }))
+        ...data.movies.map((movie) => ({ ...movie, type: "movie" })),
+        ...data.tvShows.map((tvShow) => ({ ...tvShow, type: "tv" })), // Add TV shows
       ];
-
+  
       setSearchResults(mergedResults);
     };
-
+  
     fetchData();
   }, [search]);
 
@@ -31,10 +32,31 @@ const NavBar = () => {
     setSearch(event.target.value);
   };
 
+  const handleClickOutside = (event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setSearch("");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="fixed w-full md:rounded-b-full rounded-b-3xl glass2 text-white z-20">
-      <ul className={`${!menu ? 'flex ' : ''} justify-between md:mx-10 border-none p-1`}>
-        <div className={`${menu ? 'glass' : 'flex justify-between w-full mr-10'} gap-5 p-1 rounded-xl`}>
+      <ul
+        className={`${
+          !menu ? "flex " : ""
+        } justify-between md:mx-10 border-none p-1`}
+      >
+        <div
+          className={`${
+            menu ? "glass" : "flex justify-between w-full mr-10"
+          } gap-5 p-1 rounded-xl`}
+        >
           <li
             onClick={toogleMenu}
             className="text-lg inline md:hidden font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500"
@@ -46,7 +68,9 @@ const NavBar = () => {
             )}
           </li>
           <li
-            className={`${!menu ? 'hidden' : 'flex'} text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}
+            className={`${
+              !menu ? "hidden" : "flex"
+            } text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}
           >
             <Link to="/">
               <span className="text-2xl text-blue-400 hover:text-blue-900 p-1 font-extrabold text-gradient bg-clip-text text-transparent">
@@ -54,19 +78,29 @@ const NavBar = () => {
               </span>
             </Link>
           </li>
-          <li className={`${!menu ? 'hidden' : 'flex'} text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}>
+          <li
+            className={`${
+              !menu ? "hidden" : "flex"
+            } text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}
+          >
             <Link to="/movies">Movies</Link>
           </li>
-          <li className={`${!menu ? 'hidden' : 'flex'} text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}>
+          <li
+            className={`${
+              !menu ? "hidden" : "flex"
+            } text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}
+          >
             <Link to="/tvshows">TV Shows</Link>
           </li>
         </div>
-        <li className="relative">
+        <li className="relative" ref={searchRef}>
           <input
             id="1"
             value={search}
             onChange={handleInputChange}
-            className={`${menu ? 'hidden' : 'flex'} bg-transparent border w-64 outline-none rounded-full py-2 px-2`}
+            className={`${
+              menu ? "hidden" : "flex"
+            } bg-transparent border w-64 outline-none rounded-full py-2 px-2`}
             type="text"
             placeholder="Search movies..."
           />
@@ -79,9 +113,9 @@ const NavBar = () => {
                       item.poster_path && (
                         <Link
                           to={{
-                            pathname: `/video/${item.id}/${item.type}/${encodeURIComponent(
-                              item.title || item.name
-                            )}`
+                            pathname: `/video/${item.id}/${
+                              item.type
+                            }/`,
                           }}
                           key={item.id}
                         >
@@ -97,17 +131,23 @@ const NavBar = () => {
                               </h1>
                               <div className="flex">
                                 <span className="bg-white font-semibold text-black text-sm h-6 rounded-xl p-1">
-                                  {item.type === 'movie' ? 'Movie' : 'TV'}
+                                  {item.type === "movie" ? "Movie" : "TV"}
                                 </span>
                                 <span className="mx-1">
                                   📅
                                   {item.release_date
                                     ? new Date(item.release_date).getFullYear()
                                     : item.first_air_date
-                                    ? new Date(item.first_air_date).getFullYear()
-                                    : ''}
+                                    ? new Date(
+                                        item.first_air_date
+                                      ).getFullYear()
+                                    : ""}
                                 </span>
-                                <h1 className="">{item.vote_average ? `${item.vote_average.toFixed(1)} ⭐` : ''}</h1>
+                                <h1 className="">
+                                  {item.vote_average
+                                    ? `${item.vote_average.toFixed(1)} ⭐`
+                                    : ""}
+                                </h1>
                               </div>
                             </div>
                           </li>

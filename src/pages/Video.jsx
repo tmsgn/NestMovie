@@ -24,8 +24,6 @@ const Video = () => {
   const [casts, setCasts] = useState([]);
   const [relatedMovies, setRelatedMovies] = useState([]);
   const [relatedTVShows, setRelatedTVShows] = useState([]);
-  const [topMovies, setTopMovies] = useState([]);
-  const [topTVShows, setTopTVShows] = useState([]);
   const [genres, setGenres] = useState([]);
   const [currentSeason, setCurrentSeason] = useState(1);
   const [currentEpisode, setCurrentEpisode] = useState(1);
@@ -56,6 +54,12 @@ const Video = () => {
     const fetchEpsoides = async () => {
       try {
         const data = await getEpsoides(id, selectedSeason);
+        if (!data || data.length === 0) {
+          console.warn("No episodes found for the selected season.");
+          setEpisodes([]);
+          setCurrentEpisode(1);
+          return;
+        }
         setCurrentEpisode(data[0]?.episode_number || 1);
         setEpisodes(data);
       } catch (error) {
@@ -69,6 +73,12 @@ const Video = () => {
     const fetchSeasons = async () => {
       try {
         const data = await getSeasons(id);
+        if (!data || data.length === 0) {
+          console.warn("No seasons found for the given ID.");
+          setSeasons([]);
+          setSelectedSeason(1);
+          return;
+        }
         const filteredSeasons = data.filter(
           (season) => season.season_number !== 0
         );
@@ -80,7 +90,6 @@ const Video = () => {
     };
     fetchSeasons();
   }, [id]);
-
   useEffect(() => {
     const fetchMediaData = async () => {
       try {
@@ -150,37 +159,6 @@ const Video = () => {
     fetchCasts();
   }, [id, mediaType]);
 
-  useEffect(() => {
-    const fetchTopMovies = async () => {
-      try {
-        const data = await fetchTopRatedMovies();
-        setTopMovies(data);
-      } catch (error) {
-        console.error("Error fetching top-rated movies:", error);
-      }
-    };
-    fetchTopMovies();
-  }, []);
-
-  useEffect(() => {
-    const fetchTopTVShows = async () => {
-      try {
-        const data = await fetchTopRatedTVShows();
-        setTopTVShows(data);
-      } catch (error) {
-        console.error("Error fetching top-rated TV shows:", error);
-      }
-    };
-    fetchTopTVShows();
-  }, []);
-
-  const getGenreName = (genreIds) => {
-    if (!genreIds || genreIds.length === 0) return "";
-    return genreIds
-      .map((id) => genres.find((genre) => genre.id === id)?.name || "")
-      .join(", ");
-  };
-
   if (loading) {
     return (
       <div>
@@ -222,12 +200,14 @@ const Video = () => {
           <div className="md:ml-4   p-2  gap-2 overflow-hidden text-white flex flex-col  mt-14 ">
             <div className="flex  w-full   flex-col lg:flex-row">
               {/* Video Player Section */}
-              <iframe
-                src={iframeUrl}
-                title="Media Player"
-                className="lg:w-2/3 w-full lg:h-auto h-64 sm:h-96  rounded-lg"
-                allowFullScreen
-              ></iframe>
+              {iframeUrl && (
+                <iframe
+                  src={iframeUrl}
+                  title="Media Player"
+                  className="lg:w-2/3 w-full lg:h-auto h-64 sm:h-96 rounded-lg"
+                  allowFullScreen
+                ></iframe>
+              )}
 
               {/* Movie Details Section */}
               <div className="flex mr-3  min-h-full flex-col   rounded-lg  p-2 lg:w-1/3 w-full">
@@ -351,60 +331,56 @@ const Video = () => {
           <div className="md:ml-4   p-2  gap-2 overflow-hidden text-white flex flex-col  mt-14 ">
             <div className="flex  w-full   flex-col lg:flex-row">
               {/* Video Player Section */}
-              <iframe
-                src={tvIframeUrl}
-                title="Media Player"
-                className="lg:w-2/3 w-full lg:h-auto h-64 sm:h-96  rounded-lg"
-                allowFullScreen
-              ></iframe>
+              {tvIframeUrl && (
+                <iframe
+                  src={tvIframeUrl}
+                  title="Media Player"
+                  className="lg:w-2/3 w-full lg:h-auto h-64 sm:h-96 rounded-lg"
+                  allowFullScreen
+                ></iframe>
+              )}
 
               {/* Movie Details Section */}
               <div className="flex mr-3  min-h-full flex-col   rounded-lg  p-2 lg:w-1/3 w-full">
                 <div className="flex justify-around  md:mb-2 md:py-2">
                   <span
-                    onClick={() =>{
-                      setLoading(true)
+                    onClick={() => {
+                      setLoading(true);
                       setTvIframeUrl(
                         `https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
-                      )
+                      );
                       setTimeout(() => {
-                        setLoading(false)
-                      }
-                      , 600)
-                    }
-                    }
+                        setLoading(false);
+                      }, 600);
+                    }}
                     className="bg-gray-700 md:p-2 p-1 h-8 md:h-auto md:rounded-xl  rounded-lg md:text-lg  text-purple-400 hover:bg-gray-600 cursor-pointer"
                   >
                     server 1
                   </span>
                   <span
-                    onClick={() =>{
-                      setLoading(true)
+                    onClick={() => {
+                      setLoading(true);
                       setTvIframeUrl(
                         `https://player.autoembed.cc/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
-                      )
+                      );
                       setTimeout(() => {
-                        setLoading(false)
-                      }
-                      , 600)
-                    }
-                    }
+                        setLoading(false);
+                      }, 600);
+                    }}
                     className="bg-gray-700 md:p-2 p-1 h-8 md:h-auto md:rounded-xl  rounded-lg md:text-lg  text-purple-400 hover:bg-gray-600 cursor-pointer"
                   >
                     server 2
                   </span>
                   <span
-                    onClick={() =>{
-                      setLoading(true)
+                    onClick={() => {
+                      setLoading(true);
                       setTvIframeUrl(
                         `https://vidsrc.cc/v2/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
-                      )
+                      );
                       setTimeout(() => {
-                        setLoading(false)
-                      }
-                      , 600)
-                    }
-                    }
+                        setLoading(false);
+                      }, 600);
+                    }}
                     className="bg-gray-700 md:p-2 p-1 h-8 md:h-auto md:rounded-xl  rounded-lg md:text-lg  text-purple-400 hover:bg-gray-600 cursor-pointer"
                   >
                     server 3
@@ -473,7 +449,7 @@ const Video = () => {
                 <div className="mt-4 h-24">
                   <h1 className="text-2xl font-bold">Overview</h1>
                   <p className="text-gray-400 line-clamp-3">
-                    {episodes[currentEpisode].overview}
+                    {episodes[currentEpisode]?.overview || ""}
                   </p>
                 </div>
               </div>
@@ -511,7 +487,7 @@ const Video = () => {
               <div className="grid md:grid-cols-6 border-b lg:grid-cols-7 grid-cols-4 gap-3 mr-4">
                 {episodes.map((episode, index) => (
                   <Link
-                    to={`/video/${media.id}/tv/${media.name}`}
+                    to={`/video/${media.id}/${mediaType}/`}
                     key={index}
                     className="flex flex-wrap mb-2"
                     onClick={() => {
