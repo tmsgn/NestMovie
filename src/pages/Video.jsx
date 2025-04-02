@@ -37,20 +37,25 @@ const Video = () => {
 
   useEffect(() => {
     if (media) {
+      setLoading(true);
       setIframeUrl(`https://embed.su/embed/movie/${media.id}`);
       setTvIframeUrl(
         `https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
       );
+        setLoading(false);
     }
   }, [media]);
 
   useEffect(() => {
+    setLoading(true);
     setTvIframeUrl(
       `https://embed.su/embed/tv/${media?.id}/${currentSeason}/${currentEpisode}`
     );
+    setLoading(false)
   }, [currentSeason, currentEpisode, media]);
 
   useEffect(() => {
+    setLoading(true)
     const fetchEpsoides = async () => {
       try {
         const data = await getEpsoides(id, selectedSeason);
@@ -67,9 +72,11 @@ const Video = () => {
       }
     };
     fetchEpsoides();
+    setLoading(false)
   }, [id, selectedSeason]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchSeasons = async () => {
       try {
         const data = await getSeasons(id);
@@ -89,8 +96,10 @@ const Video = () => {
       }
     };
     fetchSeasons();
+    setLoading(false)
   }, [id]);
   useEffect(() => {
+    setLoading(true);
     const fetchMediaData = async () => {
       try {
         setLoading(true);
@@ -103,9 +112,11 @@ const Video = () => {
       }
     };
     fetchMediaData();
+    setLoading(false)
   }, [id, mediaType]);
 
   useEffect(() => {
+    setLoading(true);
     if (genreId) {
       const fetchRelatedMovies = async () => {
         try {
@@ -118,6 +129,7 @@ const Video = () => {
       };
       fetchRelatedMovies();
     }
+    setLoading(false)
   }, [genreId, media]);
 
   useEffect(() => {
@@ -213,27 +225,39 @@ const Video = () => {
               <div className="flex mr-3  min-h-full flex-col   rounded-lg  p-2 lg:w-1/3 w-full">
                 <div className="flex justify-around  md:mb-2 md:py-2">
                   <span
-                    onClick={() =>
-                      setIframeUrl(`https://embed.su/embed/movie/${media.id}`)
-                    }
+                    onClick={() => {
+                      setLoading(true);
+                      setIframeUrl(`https://embed.su/embed/movie/${media.id}`);
+                      setTimeout(() => {
+                        setLoading(false);
+                      }, 600);
+                    }}
                     className="bg-gray-700 md:p-2 p-1 h-8 md:h-auto md:rounded-xl  rounded-lg md:text-lg  text-purple-400 hover:bg-gray-600 cursor-pointer"
                   >
                     server 1
                   </span>
                   <span
-                    onClick={() =>
-                      setIframeUrl(`https://vidsrc.xyz/embed/movie/${media.id}`)
-                    }
+                    onClick={() => {
+                      setLoading(true);
+                      setIframeUrl(
+                        `https://vidsrc.xyz/embed/movie/${media.id}`
+                      );
+                      setTimeout(() => {
+                        setLoading(false);
+                      }, 600);
+                    }}
                     className="bg-gray-700 md:p-2 p-1 h-8 md:h-auto md:rounded-xl  rounded-lg md:text-lg  text-purple-400 hover:bg-gray-600 cursor-pointer"
                   >
                     server 2
                   </span>
                   <span
-                    onClick={() =>
-                      setIframeUrl(
-                        `https://vidsrc.cc/v2/embed/movie/${media.id}`
-                      )
-                    }
+                    onClick={() => {
+                      setLoading(true);
+                      setIframeUrl(`https://vidfast.pro/movie/${media.id}`);
+                      setTimeout(() => {
+                        setLoading(false);
+                      }, 600);
+                    }}
                     className="bg-gray-700 md:p-2 p-1 h-8 md:h-auto md:rounded-xl  rounded-lg md:text-lg  text-purple-400 hover:bg-gray-600 cursor-pointer"
                   >
                     server 3
@@ -375,7 +399,7 @@ const Video = () => {
                     onClick={() => {
                       setLoading(true);
                       setTvIframeUrl(
-                        `https://vidsrc.cc/v2/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
+                        `https://vidfast.pro/tv/${media.id}/${currentSeason}/${currentEpisode}`
                       );
                       setTimeout(() => {
                         setLoading(false);
