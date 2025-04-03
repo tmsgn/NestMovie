@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { getGenre } from "../services/api";
+import { FavContext } from "../context/FavContext";
 
 const MovieCard = ({ movies, mediaType }) => {
   const [genres, setGenres] = useState([]);
+  const { favorites, addFavorite, removeFavorite } = useContext(FavContext);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -35,7 +37,7 @@ const MovieCard = ({ movies, mediaType }) => {
           key={movie.id}
           className="w-auto rounded-lg cursor-pointer"
         >
-          <div className="hover:bg-gray-400 box group hover:text-black p-1 rounded-xl transform transition-all duration-300 hover:scale-105">
+          <div className="hover:bg-gray-400 box group relative hover:text-black p-1 rounded-xl transform transition-all duration-300 hover:scale-105">
             <img
               className="rounded-lg w-full"
               src={`http://image.tmdb.org/t/p/w780${movie.poster_path}`}
@@ -45,11 +47,29 @@ const MovieCard = ({ movies, mediaType }) => {
               <h1 className="truncate font-semibold text-xs sm:text-base group-hover:text-black">
                 {movie.title || movie.name}
               </h1>
-              <h1 className="text-gray-300 text-xs lg:text-base group-hover:text-black">
-                {new Date(
-                  movie.release_date || movie.first_air_date
-                ).getFullYear()}
-              </h1>
+              <div className="flex gap-5 items-center relative">
+                <h1 className="text-gray-300 text-xs lg:text-base group-hover:text-black">
+                  {new Date(
+                    movie.release_date || movie.first_air_date
+                  ).getFullYear()}
+                </h1>
+                <div className="relative add-hover">
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (favorites.some((fav) => fav.id === movie.id)) {
+                        removeFavorite(movie.id);
+                      } else {
+                        addFavorite(movie);
+                      }
+                      e.preventDefault();
+                    }}
+                    className="p-1 add rounded-full top-4 right-4  cursor-pointer"
+                  >
+                    {favorites.some((fav) => fav.id === movie.id) ? "❤️" : "🤍"}
+                  </span>
+                </div>
+              </div>
               <div className="flex flex-row justify-between flex-wrap relative">
                 <div className="flex flex-row flex-wrap gap-x-3">
                   <h1 className="inline text-gray-400 group-hover:text-black text-xs md:text-sm">

@@ -43,6 +43,7 @@ export default function ContextProvider({ children }) {
     };
 
     useEffect(() => {
+        setLoading(true)
         const fetchGenres = async () => {
             try {
                 const genres = await getGenre();
@@ -53,6 +54,7 @@ export default function ContextProvider({ children }) {
         };
 
         fetchGenres();
+        setLoading(false)
     }, []);
 
     return (

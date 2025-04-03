@@ -14,6 +14,7 @@ const Movies = () => {
   const [latestMovies, setLatestMovies] = useState([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     const getLatest = async () => {
       try {
         setLoading(true)
@@ -24,10 +25,12 @@ const Movies = () => {
         console.error('Error fetching latest movies:', error);
       }
     }
-    getLatest()
+    getLatest();
+    setLoading(false)
   }, [])
   
   useEffect(() => {
+    setLoading(true)
     const fetchTopMovies = async () => {
       try {
         setLoading(true)
@@ -38,7 +41,8 @@ const Movies = () => {
         console.error('Error fetching movies:', error);
       }
     }
-    fetchTopMovies()
+    fetchTopMovies();
+    setLoading(false)
   }, [])
 
   if (loading) {

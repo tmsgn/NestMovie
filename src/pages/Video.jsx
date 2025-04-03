@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import {
   getMovieDetails,
@@ -15,6 +15,7 @@ import EpsoideCard from "../components/EpsoideCard";
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import MovieCard from "../components/MovieCard";
+import { FavContext } from "../context/FavContext";
 
 const Video = () => {
   const { id, mediaType } = useParams();
@@ -35,14 +36,16 @@ const Video = () => {
   const [isSeasonListOpen, setIsSeasonListOpen] = useState("hidden");
   const genreId = media?.genres?.[0]?.id || null;
 
+  const { favorites, addFavorite, removeFavorite } = useContext(FavContext);
+
   useEffect(() => {
     if (media) {
       setLoading(true);
-      setIframeUrl(`https://embed.su/embed/movie/${media.id}`);
+      setIframeUrl(`https://vidfast.pro/movie/${media.id}`);
       setTvIframeUrl(
-        `https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
+        `https://vidfast.pro/tv/${media.id}/${currentSeason}/${currentEpisode}`
       );
-        setLoading(false);
+      setLoading(false);
     }
   }, [media]);
 
@@ -51,11 +54,11 @@ const Video = () => {
     setTvIframeUrl(
       `https://embed.su/embed/tv/${media?.id}/${currentSeason}/${currentEpisode}`
     );
-    setLoading(false)
+    setLoading(false);
   }, [currentSeason, currentEpisode, media]);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const fetchEpsoides = async () => {
       try {
         const data = await getEpsoides(id, selectedSeason);
@@ -72,7 +75,7 @@ const Video = () => {
       }
     };
     fetchEpsoides();
-    setLoading(false)
+    setLoading(false);
   }, [id, selectedSeason]);
 
   useEffect(() => {
@@ -96,7 +99,7 @@ const Video = () => {
       }
     };
     fetchSeasons();
-    setLoading(false)
+    setLoading(false);
   }, [id]);
   useEffect(() => {
     setLoading(true);
@@ -112,7 +115,7 @@ const Video = () => {
       }
     };
     fetchMediaData();
-    setLoading(false)
+    setLoading(false);
   }, [id, mediaType]);
 
   useEffect(() => {
@@ -129,7 +132,7 @@ const Video = () => {
       };
       fetchRelatedMovies();
     }
-    setLoading(false)
+    setLoading(false);
   }, [genreId, media]);
 
   useEffect(() => {
@@ -211,7 +214,6 @@ const Video = () => {
         <div className="w-screen h-screen">
           <div className="md:ml-4   p-2  gap-2 overflow-hidden text-white flex flex-col  mt-14 ">
             <div className="flex  w-full   flex-col lg:flex-row">
-              {/* Video Player Section */}
               {iframeUrl && (
                 <iframe
                   src={iframeUrl}
@@ -221,13 +223,12 @@ const Video = () => {
                 ></iframe>
               )}
 
-              {/* Movie Details Section */}
               <div className="flex mr-3  min-h-full flex-col   rounded-lg  p-2 lg:w-1/3 w-full">
                 <div className="flex justify-around  md:mb-2 md:py-2">
                   <span
                     onClick={() => {
                       setLoading(true);
-                      setIframeUrl(`https://embed.su/embed/movie/${media.id}`);
+                      setIframeUrl(`https://vidfast.pro/movie/${media.id}`);
                       setTimeout(() => {
                         setLoading(false);
                       }, 600);
@@ -253,7 +254,7 @@ const Video = () => {
                   <span
                     onClick={() => {
                       setLoading(true);
-                      setIframeUrl(`https://vidfast.pro/movie/${media.id}`);
+                      setIframeUrl(`https://embed.su/embed/movie/${media.id}`);
                       setTimeout(() => {
                         setLoading(false);
                       }, 600);
@@ -264,7 +265,6 @@ const Video = () => {
                   </span>
                 </div>
                 <div className="flex flex-col  h-fit  w-full">
-                  {/* Movie Poster + Title */}
                   <div className="flex flex-col mb-3 ">
                     <h1 className="text-2xl  font-bold">{media.title}</h1>
                   </div>
@@ -315,6 +315,22 @@ const Video = () => {
                               : ""}
                           </h1>
                         </span>
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (favorites.some((fav) => fav.id === media.id)) {
+                              removeFavorite(media.id);
+                            } else {
+                              addFavorite(media);
+                            }
+                            e.preventDefault();
+                          }}
+                          className="p-1 text-purple-400 rounded-full top-4 right-4  cursor-pointer"
+                        >
+                          {favorites.some((fav) => fav.id === media.id)
+                            ? "❤️ added to favorite"
+                            : "🤍  click to add to favorite"}  
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -354,7 +370,6 @@ const Video = () => {
         <div className="w-screen h-screen">
           <div className="md:ml-4   p-2  gap-2 overflow-hidden text-white flex flex-col  mt-14 ">
             <div className="flex  w-full   flex-col lg:flex-row">
-              {/* Video Player Section */}
               {tvIframeUrl && (
                 <iframe
                   src={tvIframeUrl}
@@ -364,14 +379,13 @@ const Video = () => {
                 ></iframe>
               )}
 
-              {/* Movie Details Section */}
               <div className="flex mr-3  min-h-full flex-col   rounded-lg  p-2 lg:w-1/3 w-full">
                 <div className="flex justify-around  md:mb-2 md:py-2">
                   <span
                     onClick={() => {
                       setLoading(true);
                       setTvIframeUrl(
-                        `https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
+                        `https://vidfast.pro/tv/${media.id}/${currentSeason}/${currentEpisode}`
                       );
                       setTimeout(() => {
                         setLoading(false);
@@ -399,7 +413,7 @@ const Video = () => {
                     onClick={() => {
                       setLoading(true);
                       setTvIframeUrl(
-                        `https://vidfast.pro/tv/${media.id}/${currentSeason}/${currentEpisode}`
+                        `https://embed.su/embed/tv/${media.id}/${currentSeason}/${currentEpisode}`
                       );
                       setTimeout(() => {
                         setLoading(false);
@@ -411,7 +425,6 @@ const Video = () => {
                   </span>
                 </div>
                 <div className="flex flex-col  h-fit  w-full">
-                  {/* Movie Poster + Title */}
                   <div className="flex flex-col mb-3 ">
                     <h1 className="text-2xl  font-bold">{media.name}</h1>
                   </div>

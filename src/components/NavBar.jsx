@@ -92,6 +92,13 @@ const NavBar = () => {
           >
             <Link to="/tvshows">TV Shows</Link>
           </li>
+          <li
+            className={`${
+              !menu ? "hidden" : "flex"
+            } text-lg inline md:flex font-bold cursor-pointer transition duration-300 ease-in-out hover:text-red-500`}
+          >
+            <Link to="/favorites">Favorites</Link>
+          </li>
         </div>
         <li className="relative" ref={searchRef}>
           <input
