@@ -49,13 +49,6 @@ const Video = () => {
     }
   }, [media]);
 
-  useEffect(() => {
-    setLoading(true);
-    setTvIframeUrl(
-      `https://vidfast.pro/tv/${media.id}/${currentSeason}/${currentEpisode}`
-    );
-    setLoading(false);
-  }, [currentSeason, currentEpisode, media]);
 
   useEffect(() => {
     setLoading(true);
@@ -537,7 +530,7 @@ const Video = () => {
                   </div>
                 ))}
               </div>
-              <div className="grid md:grid-cols-6 border-b lg:grid-cols-7 grid-cols-4 gap-3 mr-4">
+              <div className="grid md:grid-cols-6 border-b lg:grid-cols-7 grid-cols-2 gap-3 mr-4">
                 {episodes.map((episode, index) => (
                   <Link
                     to={`/video/${media.id}/${mediaType}/`}
