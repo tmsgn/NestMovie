@@ -52,7 +52,7 @@ const Video = () => {
   useEffect(() => {
     setLoading(true);
     setTvIframeUrl(
-      `https://embed.su/embed/tv/${media?.id}/${currentSeason}/${currentEpisode}`
+      `https://vidfast.pro/tv/${media.id}/${currentSeason}/${currentEpisode}`
     );
     setLoading(false);
   }, [currentSeason, currentEpisode, media]);
@@ -478,6 +478,22 @@ const Video = () => {
                               ? casts.map((cast) => cast.name).join(", ")
                               : ""}
                           </h1>
+                        </span>
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (favorites.some((fav) => fav.id === media.id)) {
+                              removeFavorite(media.id);
+                            } else {
+                              addFavorite(media);
+                            }
+                            e.preventDefault();
+                          }}
+                          className="p-1 text-purple-400 rounded-full top-4 right-4  cursor-pointer"
+                        >
+                          {favorites.some((fav) => fav.id === media.id)
+                            ? "❤️ added to favorite"
+                            : "🤍  click to add to favorite"}  
                         </span>
                       </div>
                     </div>
