@@ -192,11 +192,22 @@ const Video = () => {
   if (!media) {
     return (
       <div>
-        <NavBar />
-        <div className="text-center absolute top-20 text-white">
-          check your connection
-        </div>
+      <NavBar />
+      <div className="flex justify-center items-center gap-2 bg-[rgba(0, 0, 0, 0.897)] h-screen dark:invert">
+        <div
+          className="h-8 w-8 bg-white rounded-full animate-bounce"
+          style={{ animationDelay: "0s" }}
+        ></div>
+        <div
+          className="h-8 w-8 bg-white rounded-full animate-bounce"
+          style={{ animationDelay: "0.2s" }}
+        ></div>
+        <div
+          className="h-8 w-8 bg-white rounded-full animate-bounce"
+          style={{ animationDelay: "0.4s" }}
+        ></div>
       </div>
+    </div>
     );
   }
 

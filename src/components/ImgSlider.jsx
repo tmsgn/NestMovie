@@ -55,11 +55,16 @@ const ImgSlider = () => {
             <h1 className="text-white font-semibold">
               📅{" "}
               {new Date(
-                currentMovie.release_date || currentMovie.first_air_date || Date.now()
+                currentMovie.release_date ||
+                  currentMovie.first_air_date ||
+                  Date.now()
               ).getFullYear()}
             </h1>
             <h1 className="text-white">
-              ⭐{typeof currentMovie.vote_average === "number" ? currentMovie.vote_average.toFixed(1) : "N/A"}
+              ⭐
+              {typeof currentMovie.vote_average === "number"
+                ? currentMovie.vote_average.toFixed(1)
+                : "N/A"}
             </h1>
           </span>
           <p
@@ -73,9 +78,9 @@ const ImgSlider = () => {
             {currentMovie.overview || "No description available."}
           </p>
           <Link
-            to={`/video/${currentMovie.id}/${currentMovie.media_type}/${encodeURIComponent(
-              currentMovie.title || currentMovie.name || "Untitled"
-            )}`}
+            to={{
+              pathname: `/video/${currentMovie.id}/${currentMovie.media_type}/`,
+            }}
             key={currentMovie.id}
             className="bg-white p-1 cursor-pointer md:px-1 text-center rounded-xl transition duration-300 ease-in-out hover:bg-red-500"
           >
