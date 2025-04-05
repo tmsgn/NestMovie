@@ -37,18 +37,18 @@ const MovieCard = ({ movies, mediaType }) => {
           key={movie.id}
           className="w-auto rounded-lg cursor-pointer"
         >
-          <div className="hover:bg-gray-400 box group relative hover:text-black p-1 rounded-xl transform transition-all duration-300 hover:scale-105">
+          <div className="md:hover:bg-gray-400 box group relative md:hover:text-black p-1 rounded-xl transform transition-all duration-300 md:hover:scale-105">
             <img
               className="rounded-lg w-full"
               src={`http://image.tmdb.org/t/p/w780${movie.poster_path}`}
               alt={movie.title || movie.name || "Movie Poster"}
             />
             <div className="py-1 inline">
-              <h1 className="truncate font-semibold text-xs sm:text-base group-hover:text-black">
+              <h1 className="truncate font-semibold text-xs sm:text-base md:group-hover:text-black">
                 {movie.title || movie.name}
               </h1>
               <div className="flex gap-5 items-center relative">
-                <h1 className="text-gray-300 text-xs lg:text-base group-hover:text-black">
+                <h1 className="text-gray-300 text-xs lg:text-base md:group-hover:text-black">
                   {new Date(
                     movie.release_date || movie.first_air_date
                   ).getFullYear()}
@@ -64,7 +64,7 @@ const MovieCard = ({ movies, mediaType }) => {
                       }
                       e.preventDefault();
                     }}
-                    className="p-1 add rounded-full top-4 right-4  cursor-pointer"
+                    className="p-1 add hover:bg-gray-600 transform transition-all duration-75 rounded-full top-4 right-4  cursor-pointer"
                   >
                     {favorites.some((fav) => fav.id === movie.id) ? "❤️" : "🤍"}
                   </span>
@@ -72,7 +72,7 @@ const MovieCard = ({ movies, mediaType }) => {
               </div>
               <div className="flex flex-row justify-between flex-wrap relative">
                 <div className="flex flex-row flex-wrap gap-x-3">
-                  <h1 className="inline text-gray-400 group-hover:text-black text-xs md:text-sm">
+                  <h1 className="inline text-gray-400 md:group-hover:text-black text-xs md:text-sm">
                     {getGenreName(movie.genre_ids)}
                   </h1>
                   <h1 className="text-xs lg:text-sm font-semibold">
@@ -81,7 +81,7 @@ const MovieCard = ({ movies, mediaType }) => {
                       : ""}
                   </h1>
                 </div>
-                <h1 className="right-1 text-xs lg:text-sm group-hover:text-black text-gray-300 border group-hover:border-black px-1 text-center rounded-lg">
+                <h1 className="right-1 text-xs lg:text-sm md:group-hover:text-black text-gray-300 border md:group-hover:border-black px-1 text-center rounded-lg">
                   {mediaType}
                 </h1>
               </div>
