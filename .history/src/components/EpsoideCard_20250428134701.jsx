@@ -1,11 +1,11 @@
 import React from 'react';
 
-const EpisodeCard = ({ episode, media, seasonNumber, onClick }) => {
+const EpisodeCard = ({ episode, media seasonNumber, onClick }) => {
   return (
    <div className='flex p-1  hover:bg-gray-400 group flex-col w-fit rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer' onClick={onClick}>
     <img 
       className=' rounded-lg object-cover' 
-      src={`https://image.tmdb.org/t/p/w500${episode.still_path}`|| `https://image.tmdb.org/t/p/w500${media.poster_path}`} 
+      src={`https://image.tmdb.org/t/p/w500${episode.still_path}`|| ''} 
       alt={episode.name}
       onError={(e) => {
         e.target.src = 'https://via.placeholder.com/176x96?text=No+Image';

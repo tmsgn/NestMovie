@@ -560,7 +560,6 @@ const Video = () => {
                     }}
                   >
                     <EpsoideCard
-                     media={media}
                       episode={episode}
                       seasonNumber={selectedSeason}
                     />
